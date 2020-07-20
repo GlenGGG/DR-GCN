@@ -1,0 +1,79 @@
+argparse_cfg:
+  gpus:
+    bind_to: processor_cfg.gpus
+    help: number of gpus
+  work_dir:
+    bind_to: processor_cfg.work_dir
+    help: the dir to save logs and models
+    default: ./work_dir/recognition/st_gcn_aaai18/ntu-rgbd-xsub
+  batch_size:
+    bind_to: processor_cfg.batch_size
+  resume_from:
+    bind_to: processor_cfg.resume_from
+    help: the checkpoint file to resume from
+
+
+
+processor_cfg:
+  type: 'processor.recognition.train'
+
+  # model setting
+  model_cfg:
+    type: 'mmskeleton.models.backbones.DyadicRelationalGCN'
+    in_channels: 3
+    num_class: 8
+    dropout: 0.5
+    T: 100
+    RAM_encoder_output_channels: 128
+    RAM_decoder_output_channels: 8
+    edge_importance_weighting: True
+    relative_attention_component: True
+    geometric_component: True
+    temporal_kernel_size: 5
+    graph_cfg:
+      layout: 'sbu'
+      strategy: 'spatial'
+  loss_cfg:
+    type: 'torch.nn.CrossEntropyLoss'
+
+  # dataset setting
+  dataset_cfg:
+    - type: 'feeder.skeleton_feeder.SkeletonFeeder'
+      data_path: ./data/SBU/train_data_4.npy
+      label_path: ./data/SBU/train_label_4.pkl
+      debug: true
+    - type: 'feeder.skeleton_feeder.SkeletonFeeder'
+      data_path: ./data/SBU/val_data_4.npy
+      label_path: ./data/SBU/val_label_4.pkl
+      debug: true
+
+  # dataloader setting
+  batch_size: 64
+  gpus: 2
+
+  # optimizer setting
+  optimizer_cfg:
+    type: 'torch.optim.SGD'
+    lr: 0.01
+    momentum: 0.9
+    nesterov: true
+    weight_decay: 0.0001
+
+  # runtime setting
+  workflow: [['train', 1], ['val', 1]]
+  work_dir: 
+  log_level: 0
+  total_epochs: 100
+  training_hooks:
+    lr_config:
+      policy: 'step'
+      step: [50, 80]
+    log_config:
+      interval: 50
+      hooks:
+        - type: TextLoggerHook
+    checkpoint_config:
+      interval: 5
+    optimizer_config:
+  resume_from:
+  load_from:
