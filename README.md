@@ -46,7 +46,7 @@ This repository is based on [mmskeleton](https://github.com/open-mmlab/mmskeleto
 
     `python data_processing/ntu120_gendata.py --data_path <path to nturgbd+d120_skeletons>`
     
-    `python data_processing/sbu_gendata.py --data_path <pth to sbu_raw>
+    `python data_processing/sbu_gendata.py --data_path <pth to sbu_raw>`
 
 # Training & Testing
 
