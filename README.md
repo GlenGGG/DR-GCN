@@ -1,6 +1,8 @@
 # DR-GCN
 Dyadic Relational Graph Convolutional Network (DR-GCN) for skeleton based interaction recognition.
 
+Two Stream Dyadic Relational AGCN (2s-DRAGCN) in our paper can be found in [here](https://github.com/GlenGGG/2s-DRAGCN).
+
 This repository is based on [mmskeleton](https://github.com/open-mmlab/mmskeleton).
 
 ![An illustration of DR-GCN's model sturcture.](/resource/pic/structure.jpg)
