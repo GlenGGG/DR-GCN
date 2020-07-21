@@ -64,7 +64,6 @@ class RAMGen(nn.Module):
                 encoder_out_channels,
                 decoder_out_channels,
                 kernel_size[1])
-        self.RAM_dropout = nn.Dropout(0.5)
 
     def forward(self, x, A):
 
@@ -89,8 +88,6 @@ class RAMGen(nn.Module):
             RAM_r_p2, _ = self.encoder(x_person_b, A)
             RAM_r_p1 = self.encoder_batchnorm2d(RAM_r_p1)
             RAM_r_p2 = self.encoder_batchnorm2d(RAM_r_p2)
-            RAM_r_p1 = self.RAM_dropout(RAM_r_p1)
-            RAM_r_p2 = self.RAM_dropout(RAM_r_p2)
             RAM_r_p1 = torch.relu(RAM_r_p1)
             RAM_r_p2 = torch.relu(RAM_r_p2)
             # encoder done
@@ -99,8 +96,6 @@ class RAMGen(nn.Module):
             RAM_r_p2, _ = self.decoder(RAM_r_p2, A)
             RAM_r_p1 = self.decoder_batchnorm2d_out(RAM_r_p1)
             RAM_r_p2 = self.decoder_batchnorm2d_out(RAM_r_p2)
-            RAM_r_p1 = torch.relu(RAM_r_p1)
-            RAM_r_p2 = torch.relu(RAM_r_p2)
             # decoder done
             # calculate cosine distance
             RAM_r = torch.einsum(
