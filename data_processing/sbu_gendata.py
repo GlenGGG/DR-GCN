@@ -44,6 +44,7 @@ def deleteJunks(target='./unzip'):
 
 
 def getSkeletonInfo(target='./unzip'):
+    print(target)
     mainFile = sorted(os.listdir(target))
     print(mainFile)
 
@@ -51,7 +52,6 @@ def getSkeletonInfo(target='./unzip'):
     labels = []
     actor_idxs = []
     actor_idx = -1
-    target = "./unzip"
     for i in range(1, 22):
         filename = '%02d' % i
         mainFile = os.path.join(target, filename)
@@ -124,10 +124,10 @@ def padZeros(total,labels,actor_idxs):
             tensor_1 = tensor_1.permute(1, 2, 0)
             tensor_1 = tensor_1.numpy()
             mx = tensor_1.shape[2]
-            tensor_1 = np.tile(tensor_1, [1, 1, 300//(tensor_1.shape[2])+1])
+            tensor_1 = np.tile(tensor_1, [1, 1, 100//(tensor_1.shape[2])+1])
             tensor_1 = torch.from_numpy(tensor_1)
-            tensor_1 = tensor_1[:, :, 0:300]
-            tensor_1[:, :, mx:300] = 0
+            tensor_1 = tensor_1[:, :, 0:100]
+            tensor_1[:, :, mx:100] = 0
             target_1 = tensor_1
             target_1 = target_1.permute(2, 0, 1)
             temp.append(target_1.numpy())
@@ -202,8 +202,8 @@ def saveData(interpolate,labels,actor_idxs, save_dir):
 
         train_data_np = c[train_idxs]
         print(train_data_np.dtype)
-        np.save("{}/train_data_set{}.npy".format(save_dir, i), train_data_np)
-        with open('{}/train_label_set{}.pkl'.format(save_dir, i), 'wb') as f:
+        np.save("{}/train_data_{}.npy".format(save_dir, i), train_data_np)
+        with open('{}/train_label_{}.pkl'.format(save_dir, i), 'wb') as f:
             pickle.dump((list(train_actor_idxs_list), list(train_labels_list)), f)
 
         val_data = list(zip(val_idxs, val_labels_list, val_actor_idxs_list))
@@ -211,8 +211,8 @@ def saveData(interpolate,labels,actor_idxs, save_dir):
         val_idxs[:], val_labels_list[:], val_actor_idxs_list[:] = zip(*val_data)
         val_data_np = c[val_idxs]
         print(val_data_np.shape)
-        np.save("{}/val_data_set{}.npy".format(save_dir, i), val_data_np)
-        with open('{}/val_label_set{}.pkl'.format(save_dir, i), 'wb') as f:
+        np.save("{}/val_data_{}.npy".format(save_dir, i), val_data_np)
+        with open('{}/val_label_{}.pkl'.format(save_dir, i), 'wb') as f:
             pickle.dump((list(val_actor_idxs_list), list(val_labels_list)), f)
     print("saved to {}".format(save_dir))
 
@@ -225,8 +225,10 @@ if __name__ == '__main__':
     arg = parser.parse_args()
     source=arg.data_path
     save_dir=arg.out_folder
-    unzipSourceFiles(source)
-    deleteJunks()
-    total,labels,actor_idxs=getSkeletonInfo()
+    target_dir=os.path.join(source,"../unzip")
+    print(target_dir)
+    # unzipSourceFiles(source)
+    # deleteJunks()
+    total,labels,actor_idxs=getSkeletonInfo(target_dir)
     interpolate=padZeros(total,labels,actor_idxs)
     saveData(interpolate, labels, actor_idxs,save_dir)

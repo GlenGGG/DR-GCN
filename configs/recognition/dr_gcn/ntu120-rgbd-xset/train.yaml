@@ -40,11 +40,11 @@ processor_cfg:
     - type: 'feeder.skeleton_feeder.SkeletonFeeder'
       data_path: ./data/NTU-RGB-D-120/xset/train_data.npy
       label_path: ./data/NTU-RGB-D-120/xset/train_label.pkl
-      debug: true
+      duo_only: true
     - type: 'feeder.skeleton_feeder.SkeletonFeeder'
       data_path: ./data/NTU-RGB-D-120/xset/val_data.npy
       label_path: ./data/NTU-RGB-D-120/xset/val_label.pkl
-      debug: true
+      duo_only: true
 
   # dataloader setting
   batch_size: 20

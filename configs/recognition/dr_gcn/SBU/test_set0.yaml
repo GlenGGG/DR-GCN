@@ -33,7 +33,7 @@ processor_cfg:
     type: "feeder.skeleton_feeder.SkeletonFeeder"
     data_path: ./data/SBU/val_data_0.npy
     label_path: ./data/SBU/val_label_0.pkl
-    debug: true
+    
 
   # dataloader setting
   batch_size: 20
