@@ -42,11 +42,13 @@ This repository is based on [mmskeleton](https://github.com/open-mmlab/mmskeleto
 
  - Preprocess the data with
 
+```
     `python data_processing/ntu_gendata.py --data_path <path to nturgbd+d_skeletons>`
 
     `python data_processing/ntu120_gendata.py --data_path <path to nturgbd+d120_skeletons>`
     
     `python data_processing/sbu_gendata.py --data_path <pth to sbu_raw>`
+```
 
 # Training & Testing
 
@@ -55,10 +57,11 @@ Change the config file depending on what you want.
 Note, the "duo_only" option in config files are solely used for the extraction of interaction classes from NTU-RGB+D and NTU-RGB+D 120 datasets. This extraction is done in [mmskeleton/feeder/skeleton_feeder.py](/mmskeleton/feeder/skeleton_feeder.py). If you have extracted interaction classes yourself, turn this off by setting "duo_only: False" in config files. Also, do not use this option for SBU dataset.
 
     `mmskl configs/recognition/dr_gcn/$DATASET/train.yaml`
+    
     `$DATASET can be:`
-    	`ntu120-rgbd-xset`
-	`ntu120-rgbd-xsub`
-	`ntu-rgbd-xsub`
-	`ntu-rgbd-xview`
-	`SBU`
+		`ntu120-rgbd-xset`
+		`ntu120-rgbd-xsub`
+		`ntu-rgbd-xsub`
+		`ntu-rgbd-xview`
+		`SBU`
 
