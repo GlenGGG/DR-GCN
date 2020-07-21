@@ -7,7 +7,6 @@ from mmcv.runner import Runner
 from mmcv import Config, ProgressBar
 from mmcv.parallel import MMDataParallel
 import os
-os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 
 seed=1027
 
@@ -18,7 +17,7 @@ def get_gpus(gpus):
 def set_determined_seed(seed):
     torch.manual_seed(seed)
     torch.cuda.manual_seed(seed)
-    torch.cuda.manual_seed_all(seed)  
+    torch.cuda.manual_seed_all(seed)
     np.random.seed(seed)  # Numpy module.
     torch.manual_seed(seed)
     torch.backends.cudnn.benchmark = False
@@ -68,7 +67,7 @@ def test(model_cfg, dataset_cfg, checkpoint, batch_size=64, gpus=1, workers=4):
             prog_bar.update()
     results = np.concatenate(results)
     labels = np.concatenate(labels)
-    
+
     #confusion
     conf_matrix = confusion_matrix(torch.max(torch.from_numpy(results), 1)[1], labels, conf_matrix)
     np.save('/home/computer/WBH/GCN/INTERGCN/conf.npy', conf_matrix)

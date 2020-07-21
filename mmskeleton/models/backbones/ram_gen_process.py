@@ -67,7 +67,7 @@ class RAMGen(nn.Module):
 
     def forward(self, x, A):
 
-        N,M,C,T,V=x.shape
+        N, M, C, T, V = x.shape
         x_person_a, x_person_b = x.chunk(2, 1)
         x_person_a = torch.squeeze(x_person_a, 1)
         x_person_b = torch.squeeze(x_person_b, 1)
@@ -115,7 +115,7 @@ class RAMGen(nn.Module):
         elif self.geometric_component:
             RAM = RAM_g
         else:
-            RAM = torch.ones(N,T,V,V)
+            RAM = torch.ones(N, T, V, V)
 
         abnormal = torch.sum(torch.var(x_person_b, dim=3), dim=1)
         abnormal = torch.where(
