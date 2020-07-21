@@ -28,7 +28,7 @@ def unzip(sourceFile, targetPath):
 def unzipSourceFiles(source='./source', target='./unzip'):
 
     for i in range(1, 22):
-        filename = "sbu_"+str(i)
+        filename = "Set%02d"%i
         path = os.path.join(source, filename+".zip")
         print(path)
         target_path = os.path.join(target, str(i))
@@ -227,8 +227,8 @@ if __name__ == '__main__':
     save_dir=arg.out_folder
     target_dir=os.path.join(source,"../unzip")
     print(target_dir)
-    # unzipSourceFiles(source)
-    # deleteJunks()
+    unzipSourceFiles(source)
+    deleteJunks()
     total,labels,actor_idxs=getSkeletonInfo(target_dir)
     interpolate=padZeros(total,labels,actor_idxs)
     saveData(interpolate, labels, actor_idxs,save_dir)
