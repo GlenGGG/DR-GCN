@@ -67,7 +67,7 @@ Note, the "duo_only" option in config files are solely used for the extraction o
 		`ntu-rgbd-xview`
 		`SBU`
 
-# Reference
+# Citation
 BibTex:
 ```
 @article{ZHU2021107920,
